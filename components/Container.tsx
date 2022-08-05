@@ -26,7 +26,7 @@ import PagesIcon from "@material-ui/icons/Pages";
 import HomeIcon from "@material-ui/icons/Home";
 import MenuIcon from "@material-ui/icons/Menu";
 
-const pages = ["about", "list"];
+const pages = ["about", "list", "create"];
 const drawerWidth = 8 * 29;
 
 export const Container: FunctionComponent = ({ children }) => {
@@ -49,8 +49,8 @@ export const Container: FunctionComponent = ({ children }) => {
           <Link key={text} href={`/${text}`}>
             <ListItem button>
               <ListItemIcon children={<PagesIcon />} />
-              <ListItemText primary={text} />
-            </ListItem>
+            <ListItemText primary={text} />
+          </ListItem>
           </Link>
         ))}
       </List>

@@ -11,28 +11,30 @@ import {
 import CheckIcon from "@material-ui/icons/Check";
 import Link from "next/link";
 
-interface Show {
+interface Venue {
   _id: string;
   title: string;
   description:string;
 
 }
 
-const Index: NextPage<{ shows: Array<Show> }> = ({ shows }) => 
+const Index: NextPage<{ venues: Array<Venue> }> = ({ venues }) => 
   {
-    console.log("testshghghgh",shows);
+    console.log("list venues ",venues);
   return(
     <Container>
       <Typography children="Venue List" variant="h6" />
       <List>
-        {shows.map((data, index) => (
-          <Link key={index} href="/list/[_id]" as={`/list/${data?._id}`}>
-            <ListItem button>
-              <ListItemIcon children={<CheckIcon />} />
-              <ListItemText primary={data?.title} />
-            </ListItem>
-          </Link>
-        ))}
+        {venues.map((venue, index) => {
+          return (
+            <Link key={index} href="/list/[id]" as={`/list/${venue?._id}`}>
+              <ListItem button>
+                <ListItemIcon children={<CheckIcon />} />
+                <ListItemText primary={venue?.title} />
+              </ListItem>
+            </Link>
+          );
+        })}
       </List>
     </Container>
   )
@@ -42,10 +44,13 @@ const Index: NextPage<{ shows: Array<Show> }> = ({ shows }) =>
 Index.getInitialProps = async () => {
  // const res = await fetch("https://api.tvmaze.com/sear\ch/shows?q=batman");
   const res = await fetch("https://venue-service-example.herokuapp.com/api/venues");
-  const data: Array<{ show: Show }> = await res.json();
-  console.log("testshgdatadatadatadatahghgh",data);
+  const data: Array<{ venue: Venue }> = await res.json();
+  console.log("getInitialProps",data);
   return {
-    shows: data.map(entry => entry.show)
+    venues: data.map(entry => {
+      console.log("entry",entry);
+      return entry as unknown as Venue;
+    })
   };
 };
 

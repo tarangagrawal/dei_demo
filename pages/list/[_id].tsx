@@ -3,18 +3,21 @@ import fetch from "isomorphic-unfetch";
 import { NextPageContext } from "next";
 import { Typography, Button } from "@material-ui/core";
 import ArrowBackIcon from '@mui/icons-material/ArrowBack';
+import Link from "next/link";
 
 const Post = ({ show }: any) => (
     
   <Container>
-    <Typography children={show?.title ? show.title: "Item not found"} variant="h6" />
+    <Typography children={show?.title || "Item not found"} variant="h6" />
     {/* <img src={show.image.medium} /> */}
     <Typography variant="h5" color="primary">
-      {show?.description ? (show?.description.substring(0,150)).replace(/<[/]?[pb]>/g, "") :null}
+      {(show?.description?.substring(0,150)).replace(/<[/]?[pb]>/g, "") || null}
     </Typography>
-      <Button href="/list" variant="outlined" startIcon={<ArrowBackIcon />}>
-        Back
-      </Button>
+      <Link href="/list"  >
+        <a><Button variant="outlined" startIcon={<ArrowBackIcon />}>
+          Back
+        </Button></a>
+      </Link>
   </Container>
 );
 
